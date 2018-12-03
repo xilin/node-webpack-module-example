@@ -8,6 +8,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 let name      = 'webpack-sample',
     library   = name.replace(/(-\w)/, m => m.replace('-', '').toUpperCase()),
     plugins   = [],
+    externals = [],
     mode      = 'development',
     devtool   = 'inline-source-map';
 
@@ -28,6 +29,9 @@ if (isProduction) {
       sourceMap: true
     })
   );
+  externals = [
+    'lodash',
+  ];
 }
 
 if (process.env.npm_config_report) {
@@ -67,9 +71,7 @@ module.exports = {
       }
     ]
   },
-  externals: [
-    'lodash',
-  ],
+  externals,
   devServer: {
     proxy: {
       "*": `http://127.0.0.1:8081`,
